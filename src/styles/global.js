@@ -11,5 +11,3 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Lato", sans-serif;
   }
 `
-
-// const colors = ['#62CBC6', '#00ABAD', '#00858C', '#006073', '#004D61']
