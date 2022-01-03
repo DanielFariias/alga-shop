@@ -13,8 +13,23 @@ export const Title = styled.h2`
 
 
 export const List = styled.div`
-  /* border: 2px solid #004D61; */
   height: 424px;
 
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: #006073;
+}
 `
