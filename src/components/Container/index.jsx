@@ -12,7 +12,6 @@ import * as C from './styles';
 
 export function Container() {
   const dispatch = useDispatch()
-  const products = useSelector(state => state.products)
   const selectedProducts = useSelector(state =>
     state.products.filter(product => product.checked)
   )
@@ -37,15 +36,14 @@ export function Container() {
           left={
             <ShoppingList
               title="Produtos Disponíveis"
-              list={products}
               handleChecked={handleChecked}
             />
           }
           middle={
             <ShoppingList
               title="Sua lista de compras"
-              list={selectedProducts}
               handleChecked={handleChecked}
+              selected
             />
           }
           right={

@@ -1,7 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { CheckButton } from '../shared/CheckButton';
 import * as C from './styles';
 
-export function ShoppingList({ title, list, handleChecked }) {
+export function ShoppingList({ title, handleChecked, selected }) {
+  const products = useSelector(state => selected
+    ? state.products.filter(product => product.checked)
+    : state.products
+  )
+
   return (
     <C.Container>
       <C.Title>
@@ -9,7 +15,7 @@ export function ShoppingList({ title, list, handleChecked }) {
       </C.Title>
       <C.List>
         {
-          list?.map(product => {
+          products.map(product => {
             return (
               <CheckButton
                 key={product.id}
