@@ -1,42 +1,32 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Header } from '../Header';
-import { Content } from '../Content';
-import { ShoppingList } from '../ShoppingList';
-import { LineChart } from '../shared/LineChart';
+import { toggleProduct } from '../../store/reducers/Products/actions';
 import { extractPercentage } from '../../utils/extractPercentage';
-
-import productsMock from '../../mocks/productsList.json'
+import { LineChart } from '../shared/LineChart';
+import { ShoppingList } from '../ShoppingList';
+import { Content } from '../Content';
+import { Header } from '../Header';
 
 import * as C from './styles';
 
 export function Container() {
-  const [products, setProducts] = useState(productsMock.products)
-  const [selectedProducts, setSelectedProducts] = useState([])
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.products)
+  const selectedProducts = useSelector(state =>
+    state.products.filter(product => product.checked)
+  )
   const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
-    const newSelectedProducts = products
-      .filter(product => product.checked)
-
-    setSelectedProducts(newSelectedProducts)
-  }, [products])
-
-  useEffect(() => {
     const total = selectedProducts
-      .map(product => product.price)
-      .reduce((sum, price) => sum + price, 0)
+      .reduce((sum, product) => sum + product.price, 0)
 
     setTotalPrice(total)
   }, [selectedProducts])
 
-  const handleChecked = (id, checked) => {
-    const newProducts = products.map((product) => (
-      product.id === id
-        ? { ...product, checked: !product.checked }
-        : product
-    ))
-    setProducts(newProducts)
+  const handleChecked = (id) => {
+    dispatch(toggleProduct(id))
   }
 
   return (
@@ -113,10 +103,8 @@ export function Container() {
                 </h2>
               </div>
             </div>
-
           }
         />
-
       </C.CardContainer>
     </C.Container>
   )
